@@ -1,0 +1,108 @@
+openapi: 3.0.0
+info: 
+  title: User behavioral data analyzer
+  version: 1.0.0
+paths: 
+  /v1/users/{user-uuid}/clicks:
+    get:
+      parameters:
+        - name: user-uuid
+          in: path
+          description: User uuid for which the counts should be calculated
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          description: Start date from which the counts should be calculated
+          required: true
+          schema:
+            type: string
+        - name: to
+          in: query
+          description: End date for which the counts should be calculated. If not provided, the default value will be now
+          required: false
+          schema:
+            type: string
+      responses: 
+        200:
+          description: Average clicks count user performed during the given time period
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClicksCountResponse'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v1/users/{user-uuid}/timespent:
+    get:
+      parameters:
+        - name: user-uuid
+          in: path
+          description: User uuid for which the time spent should be calculated
+          required: true
+          schema:
+            type: string
+        - name: screen
+          in: query
+          description: The screen for which the time spent should be calculated
+          required: true
+          schema:
+            type: string
+            enum: [home, account, notifications, settings]
+      responses: 
+        200:
+          description: Average time user spent on the corresponding screen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeSpentResponse'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas: 
+    ClicksCountResponse:
+      type: object
+      properties: 
+        count:
+          type: integer
+          format: int32
+      required:
+        - count
+    TimeSpentResponse:
+      type: object
+      properties: 
+        time-spent:
+          type: string
+      required:
+        - time-spent
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+      required:
+        - code
+        - message
