@@ -1,9 +1,12 @@
-openapi: 3.0.0
+openapi: 3.0.1
 info: 
   title: User behavioral data analyzer
+  description: 'Distributed analytics system'
   version: 1.0.0
+servers:
+  - url: /v1
 paths: 
-  /v1/users/{user-uuid}/clicks:
+  /users/{user-uuid}/clicks:
     get:
       parameters:
         - name: user-uuid
@@ -12,18 +15,15 @@ paths:
           required: true
           schema:
             type: string
-        - name: from
+            example: 3588b44b-ec83-430a-85f1-c4eb6d50ec16
+        - name: timePeriod
           in: query
-          description: Start date from which the counts should be calculated
+          description: Time period in minutes for which the counts should be calculated
           required: true
           schema:
-            type: string
-        - name: to
-          in: query
-          description: End date for which the counts should be calculated. If not provided, the default value will be now
-          required: false
-          schema:
-            type: string
+            type: integer
+            format: int32
+            example: 30
       responses: 
         200:
           description: Average clicks count user performed during the given time period
@@ -43,7 +43,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /v1/users/{user-uuid}/timespent:
+  /users/{user-uuid}/timespent:
     get:
       parameters:
         - name: user-uuid
@@ -52,6 +52,7 @@ paths:
           required: true
           schema:
             type: string
+            example: 3588b44b-ec83-430a-85f1-c4eb6d50ec16
         - name: screen
           in: query
           description: The screen for which the time spent should be calculated
@@ -59,6 +60,7 @@ paths:
           schema:
             type: string
             enum: [home, account, notifications, settings]
+            example: home
       responses: 
         200:
           description: Average time user spent on the corresponding screen
