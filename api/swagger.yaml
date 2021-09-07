@@ -18,12 +18,12 @@ paths:
             example: 3588b44b-ec83-430a-85f1-c4eb6d50ec16
         - name: timePeriod
           in: query
-          description: Time period in minutes for which the counts should be calculated
+          description: Time period in miliseconds for which the counts should be calculated
           required: true
           schema:
             type: integer
             format: int32
-            example: 30
+            example: 1599397017
       responses: 
         200:
           description: Average clicks count user performed during the given time period
