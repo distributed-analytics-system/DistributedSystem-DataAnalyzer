@@ -2,17 +2,28 @@
 
 const logger = require('../../logger');
 const error = require('../../errors');
-const datastore = require('../../database');
+const database = require('../../database');
+const { databaseTableName } = require('../../constants');
 
 module.exports = async (req, res) => {
   const {
-    params: { 'user-uuid': userUuid },
+    params: { uuid },
     query: { screen },
-    metadata: { reqId },
-    headers: { authorization }
+    metadata: { reqId }
   } = req;
 
-  // TODO: read from DB
+  logger.debug({ message: 'Reading the data from database', id: reqId });
+  let averageTimespent = 0;
+  try {
+    const data = await database.get({ tableName: databaseTableName, key: uuid });
+    if (data[screen]) {
+      averageTimespent = data[screen].timespent;
+    }
+  } catch (err) {
+    throw new error.InternalServerError({ message: err.message });
+  }
 
-  res.status(200).end();
+  res.status(200).json({
+    timespent: averageTimespent
+  });
 };

@@ -93,10 +93,10 @@ components:
     TimeSpentResponse:
       type: object
       properties: 
-        time-spent:
+        timespent:
           type: string
       required:
-        - time-spent
+        - timespent
     Error:
       type: object
       properties:

@@ -25,5 +25,9 @@ module.exports = {
   awsSecretAccessKey: {
     name: 'AWS_SECRET_ACCESS_KEY',
     validator: str()
+  },
+  awsRegion: {
+    name: 'AWS_REGION',
+    validator: str()
   }
 };

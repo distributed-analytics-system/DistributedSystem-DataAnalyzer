@@ -1,5 +1,5 @@
-const { read } = require('./database');
+const { get } = require('./database');
 
 module.exports = {
-  read
+  get
 };
