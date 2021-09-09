@@ -16,6 +16,10 @@ module.exports = async (req, res) => {
   let averageClicks = 0;
   try {
     const data = await database.get({ tableName: databaseTableName, key: uuid });
+    if (!data) {
+      throw new error.NotFound({message: 'The user could not be found'});
+    }
+
     let totalClicks = 0;
     let totalTimespent = 0;
     for (let clickData of Object.values(data)) {
@@ -27,6 +31,10 @@ module.exports = async (req, res) => {
       averageClicks = ((timePeriod * totalClicks) / totalTimespent);
     }
   } catch (err) {
+    if(err instanceof error.NotFound) {
+      throw err;
+    }
+
     throw new error.InternalServerError({ message: err.message });
   }
 

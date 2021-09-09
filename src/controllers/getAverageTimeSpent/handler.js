@@ -16,10 +16,18 @@ module.exports = async (req, res) => {
   let averageTimespent = 0;
   try {
     const data = await database.get({ tableName: databaseTableName, key: uuid });
+    if (!data) {
+      throw new error.NotFound({message: 'The user could not be found'});
+    }
+    
     if (data[screen]) {
       averageTimespent = data[screen].timespent;
     }
   } catch (err) {
+    if(err instanceof error.NotFound) {
+      throw err;
+    }
+
     throw new error.InternalServerError({ message: err.message });
   }
 
