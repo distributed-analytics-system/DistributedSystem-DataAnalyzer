@@ -24,6 +24,11 @@ module.exports = async (req, res) => {
       averageTimespent = data[screen].timespent;
     }
   } catch (err) {
+    // This probably means that the table is not created yet, so we don't have any data to return.
+    if (err.code === 'ResourceNotFoundException') {
+      throw new error.NotFound({ message: 'Resource not found' });
+    }
+
     if(err instanceof error.NotFound) {
       throw err;
     }
