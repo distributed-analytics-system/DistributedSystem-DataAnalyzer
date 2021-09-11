@@ -14,7 +14,7 @@ const validation = {
 
 module.exports = {
   method: 'get',
-  route: '/v1/users/:uuid/timespent',
+  route: '/v1/statistics/users/:uuid/timespent',
   validation,
   handler
 };

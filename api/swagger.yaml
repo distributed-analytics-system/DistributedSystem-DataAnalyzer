@@ -6,7 +6,7 @@ info:
 servers:
   - url: /v1
 paths: 
-  /users/{user-uuid}/clicks:
+  /statistics/users/{user-uuid}/clicks:
     get:
       parameters:
         - name: user-uuid
@@ -43,7 +43,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /users/{user-uuid}/timespent:
+  /statistics/users/{user-uuid}/timespent:
     get:
       parameters:
         - name: user-uuid
