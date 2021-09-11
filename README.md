@@ -29,7 +29,13 @@ The DataAnalyzer microservice provides REST APIs. The APIs are being used by the
     2. Provide list of env variables in 'root/.env-dev' file with following format: envVar=value
     3. npm start
 
-#### Check available APIs
+#### Deployment
+##### Production 
+- The service is deployed with k8s using AWS EKS
+##### Local
+- The service is running with Docker and integrated with LocalStack in order to use AWS DynamoDB
+
+#### Available APIs
 After running the service locally, go to your browser and see the APIs with this Url: http://localhost:8080/swagger
 
 #### Maintainer contact
