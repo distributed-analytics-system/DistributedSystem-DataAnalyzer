@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-analyzer
+spec:
+  selector:
+    matchLabels:
+      app: data-analyzer
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: data-analyzer
+    spec:
+      containers:
+      - name: data-analyzer
+        image: 465310913908.dkr.ecr.us-east-2.amazonaws.com/distributed-system:data-analyzer
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8082
